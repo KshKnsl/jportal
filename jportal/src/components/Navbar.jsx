@@ -1,35 +1,40 @@
 import { NavLink } from 'react-router-dom'
-const BASE_NAME = 'jportal'
+import { UserRound, GraduationCap, FileSpreadsheet, BookOpen, ClipboardList } from 'lucide-react'
 
-function Navbar() {
-  const navItems = [
-    { name: 'ATTENDANCE', path: '/attendance', icon: `/${BASE_NAME}/icons/attendance.svg` },
-    { name: '  GRADES  ', path: '/grades', icon: `/${BASE_NAME}/icons/grades.svg` },
-    { name: '  EXAMS', path: '/exams', icon: `/${BASE_NAME}/icons/exams.svg` },
-    { name: ' SUBJECTS ', path: '/subjects', icon: `/${BASE_NAME}/icons/subjects1.svg` },
-    { name: ' PROFILE ', path: '/profile', icon: `/${BASE_NAME}/icons/profile.svg` },
-  ];
+const navItems = [
+  { name: 'Attendance', path: '/attendance', icon: ClipboardList },
+  { name: 'Grades', path: '/grades', icon: GraduationCap },
+  { name: 'Exams', path: '/exams', icon: FileSpreadsheet },
+  { name: 'Subjects', path: '/subjects', icon: BookOpen },
+  { name: 'Profile', path: '/profile', icon: UserRound },
+]
+
+export default function Navbar() {
   return (
-    <div className='flex items-center justify-between sm:gap-0 gap-2 w-screen fixed bottom-0 left-0 bg-[#242a32] dark:bg-white py-4 px-4'>
-      {navItems.map((item) => (
-        <NavLink
-          key={item.name}
-          to={item.path}
-          className={({ isActive }) => `
-            flex-1 text-md text-white dark:text-black text-clip overflow-hidden whitespace-nowrap
-            ${isActive ? 'opacity-100' : 'opacity-70'}
-          `}
-        >
-          <div className='flex flex-col items-center'>
-            <div className='hover:bg-gray-700 dark:hover:bg-gray-300 rounded-xl w-full p-1 flex items-center justify-center'>
-              <img src={item.icon} alt={item.name} className="w-5 h-5" />
-            </div>
-            <p className='max-[370px]:text-[0.6rem] max-[390px]:text-[0.7rem] text-xs text-left'>{item.name}</p>
-          </div>
-        </NavLink>
-      ))}
-    </div>
+    <nav className="fixed bottom-0 left-0 w-full bg-[#191C20] dark:bg-gray-100 py-2 px-4">
+      <ul className="flex items-center justify-between max-w-screen-lg mx-auto">
+        {navItems.map((item) => {
+          const Icon = item.icon
+          return (
+            <li key={item.name} className="flex-1">
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex flex-col items-center justify-center p-2 rounded-lg transition-colors ${
+                    isActive
+                      ? 'text-blue-500 dark:text-blue-600'
+                      : 'text-gray-400 hover:text-gray-200 dark:text-gray-500 dark:hover:text-gray-800'
+                  }`
+                }
+              >
+                <Icon className="w-6 h-6 mb-1" />
+                <span className="text-xs font-medium">{item.name}</span>
+              </NavLink>
+            </li>
+          )
+        })}
+      </ul>
+    </nav>
   )
 }
 
-export default Navbar
